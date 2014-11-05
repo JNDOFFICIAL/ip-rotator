@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-import argparse
 import logging
 import ConfigParser
 import sys
