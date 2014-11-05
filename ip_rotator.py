@@ -42,11 +42,7 @@ def main():
 			#Add new flows
 			try:
 				for port in params.flow_port:
-					flow['name_in']+='_'+port
-					flow['name_out']+='_'+port
-
-			
-					odl.add_flow(name=flow['name_in'],
+					odl.add_flow(name=flow['name_in']+'_'+port,
 						installInHw='true',
 						node={"id":switch, "type": "OF"},
 						priority=flow['priority'],
@@ -57,7 +53,7 @@ def main():
 						actions=['SET_NW_DST='+params.outgoing_ip, 'HW_PATH']
 					)
 
-					odl.add_flow(name=flow['name_out'],
+					odl.add_flow(name=flow['name_out']+'_'+port,
 						installInHw='true',
 						node={"id":switch, "type": "OF"},
 						priority=flow['priority'],
