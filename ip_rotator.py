@@ -36,7 +36,7 @@ def main():
 			#Check priority of current flows
 			for name, value in current_flows.items():
 				if re.search(params.flow_prefix, name):
-					if flow['priority'] <= value['priority']:
+					if flow['priority'] == value['priority']:
 						flow['priority'] = str(int(value['priority'])+1)
 
 			#Add new flows
