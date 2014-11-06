@@ -36,9 +36,10 @@ def main():
 			#Check priority of current flows
 			for name, value in current_flows.items():
 				if re.search(params.flow_prefix, name):
-					if flow['priority'] == value['priority']:
+					if int(flow['priority']) == int(value['priority']):
 						flow['priority'] = str(int(value['priority'])+1)
-
+						
+			l.debug("Priority for flows: %s" % (flow['priority']))
 			#Add new flows
 			try:
 				for port in params.flow_port:
@@ -66,7 +67,8 @@ def main():
 			finally:
 				l.info("I've set IP %s" % (ip_address))
 				for name, value in current_flows.items():
-					odl.delete_flow(node={"id":switch}, name=name)
+					if re.search(params.flow_prefix, name):
+						odl.delete_flow(node={"id":switch}, name=name)
 			
 		time.sleep(params.rotate_time)
 
