@@ -5,7 +5,7 @@ import urllib2
 from utils import params, l
 
 class opendaylight:
-	def auth(self, api_url):
+	def __auth(self, api_url):
 		"""Auth to Opendaylight API"""
 		auth_handler = urllib2.HTTPBasicAuthHandler()
 		auth_handler.add_password(realm='opendaylight', uri=api_url,
@@ -22,7 +22,7 @@ class opendaylight:
 		result=[]
 		api_url = "%s/controller/nb/v2/switchmanager/default/nodes" % (params.odl_server)
 
-		self.auth(api_url)
+		self.__auth(api_url)
 
 		req=urllib2.Request(url=api_url)
 		f = urllib2.urlopen(req)
@@ -38,7 +38,7 @@ class opendaylight:
 		api_url=("%s/controller/nb/v2/flowprogrammer/default/node/OF/%s/staticFlow/%s" %
 			(params.odl_server, kwargs['node']['id'], kwargs['name']))
 
-		self.auth(api_url)
+		self.__auth(api_url)
 
 		request = urllib2.Request(api_url,data=json.dumps(kwargs))
 		request.add_header('Content-Type', 'application/json')
@@ -59,7 +59,7 @@ class opendaylight:
 		api_url=("%s/controller/nb/v2/flowprogrammer/default/node/OF/%s/staticFlow/%s" %
 			(params.odl_server, kwargs['node']['id'], kwargs['name']))
 
-		self.auth(api_url)
+		self.__auth(api_url)
 
 		request = urllib2.Request(api_url)
 		request.get_method = lambda: 'DELETE'
@@ -75,7 +75,7 @@ class opendaylight:
 
 		api_url="%s/controller/nb/v2/flowprogrammer/default/node/OF/%s" % (params.odl_server, kwargs['node']['id'])
 
-		self.auth(api_url)
+		self.__auth(api_url)
 
 		request = urllib2.Request(api_url)
 		request.add_header('Content-Type', 'application/json')
